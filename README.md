@@ -9,3 +9,6 @@ Move WPI to bin directory
 ```shell script
 $ mv wpi /usr/local/bin
 ```
+
+## The Idea
+![WPI Cloud MindMap](./help/wpi-idea.png)

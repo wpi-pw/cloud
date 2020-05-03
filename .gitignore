@@ -7,6 +7,7 @@
 # wpi cloud gitignore exclude
 !.gitignore
 !bin
-!wpi.sh
+!help
+!wpi
 !README.md
 !Vagrantfile

@@ -1,0 +1,12 @@
+# all hidden files
+/.*
+
+# all directories
+/*
+
+# wpi cloud gitignore exclude
+!.gitignore
+!bin
+!wpi.sh
+!README.md
+!Vagrantfile

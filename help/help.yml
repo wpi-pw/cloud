@@ -1,12 +1,20 @@
----
+# WPI Cloud - help
+# by Dima Minka (https://dima.mk)
+# https://cloud.wpi.pw
 
-# This file is a YAML formatted file. YAML indenting is done in spaces not
-# tabs, and whitespace is significant. If you don't stick to this, it will
-# fail on provision
+NAME:
+  wpi
 
-# These are your website, and their names plugins/themes they're
-# located in. See the docs for how to define these, and what all the keys
-# and options are
-# Remember, whitespace is significant! Tabs and spaces mean different things
+DESCRIPTION:
+  Manage Workflow through the command-line.
 
-welcome: Welcome to WPI Cloud Help file
+SYNOPSIS:
+  wpi <command>
+
+SUBCOMMANDS:
+  help: Gets help on WPI, or on a specific command.
+  init: Install required packages like wp-cli, yq, jq.
+
+GLOBAL_PARAMETERS:
+  - param: --local | -l
+    description: run the WPI localy from downloaded repository.

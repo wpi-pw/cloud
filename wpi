@@ -4,10 +4,14 @@
 # by Dima Minka (https://dima.mk)
 # https://cloud.wpi.pw
 
-if [[ "$1" == "dev" ]]; then
-  # Load local source scripts on dev flag
-  source ${PWD}/bin/source.sh
-else
-  # Load cloud source scripts from github
-  source <(curl -s https://raw.githubusercontent.com/wpi-pw/cloud/master/bin/source.sh)
-fi
+# Load cloud source scripts
+case "${@: -1}" in
+  --local | -l)  source ${PWD}/bin/source.sh;; # Load local source scripts
+  *)  source <(curl -s https://raw.githubusercontent.com/wpi-pw/cloud/master/bin/source.sh) && exit 1 ;;
+esac
+
+# Run WPI Cloud command
+case "${@: -1}" in
+  --local | -l) bash ${PWD}/bin/$1.sh "$@";;
+  *)            bash <(curl -s -L wpi.pw/bin/$1.sh) "$@" && exit 1 ;;
+esac

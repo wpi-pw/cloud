@@ -6,8 +6,8 @@
 
 # Load cloud source scripts
 case "${@: -1}" in
-  --local | -l)  source ${PWD}/bin/source.sh;; # Load local source scripts
-  *)  source <(curl -s https://raw.githubusercontent.com/wpi-pw/cloud/master/bin/source.sh) && exit 1 ;;
+  --local | -l) source ${PWD}/bin/source.sh;; # Load local source scripts
+  *)            source <(curl -s https://raw.githubusercontent.com/wpi-pw/cloud/master/bin/source.sh);;
 esac
 
 # Run WPI Cloud command

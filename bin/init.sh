@@ -13,7 +13,7 @@ readonly NC='\033[0m'     # no color
 
 printf "%s${GRN}Installing:${NC} Make WPI executable\n"
 chmod +x wpi
-mv wpi /usr/local/bin
+sudo mv wpi /usr/local/bin
 
 printf "%s${GRN}Installing:${NC} wp-cli\n"
 curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

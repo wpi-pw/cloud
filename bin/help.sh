@@ -4,5 +4,5 @@
 # by Dima Minka (https://dima.mk)
 # https://cloud.wpi.pw
 
-cat ${PWD}/help/help.yml | egrep -v "^\s*(#)"
+cat <(curl -s -L wpi.pw/help/help.yml) | egrep -v "^\s*(#)"
 echo ""

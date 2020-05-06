@@ -1,5 +1,11 @@
 # WPI Cloud - development in progress
 ---
+WPI install
+```shell script
+$ wget -qO wpi wpi.pw/wpi && bash wpi init
+```
+
+## Manualy installation for Vagrant/MacOS
 Make WPI executable
 ```shell script
 $ chmod +x wpi

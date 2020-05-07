@@ -1,0 +1,37 @@
+# WPI Cloud - app help
+# by Dima Minka (https://dima.mk)
+# https://cloud.wpi.pw
+
+NAME:
+
+  wpi app
+
+DESCRIPTION:
+
+  Downloads, installs, updates, and manages a WordPress and packages installation via WPI.
+
+SYNOPSIS:
+
+  wpi app <command>
+
+SUBCOMMANDS:
+
+  clean: Removes all installed packags.
+  install: Runs the WPI installation process.
+  update: Updates WPI app packages and WordPress core to a newer versions.
+  sync: Syncing WPI WordPress environments with WP-CLI aliases and rsync.
+
+EXAMPLES:
+
+  - wpi app clean
+  - wpi app install
+  - wpi app updates
+  - wpi app sync
+
+
+GLOBAL_PARAMETERS:
+
+  - param: --help | -h
+    description: Gets help on WPI, or on a specific command.
+  - param: --local | -l
+    description: Run the WPI localy from downloaded repository.

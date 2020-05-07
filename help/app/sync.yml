@@ -1,0 +1,24 @@
+# WPI Cloud - app help
+# by Dima Minka (https://dima.mk)
+# https://cloud.wpi.pw
+
+NAME:
+
+  wpi app sync
+
+DESCRIPTION:
+
+  Development in progress
+
+SYNOPSIS:
+
+  wpi app sync <command>
+
+SUBCOMMANDS:
+
+GLOBAL_PARAMETERS:
+
+  - param: --help | -h
+    description: Gets help on WPI, or on a specific command.
+  - param: --local | -l
+    description: Run the WPI localy from downloaded repository.

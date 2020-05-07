@@ -3,18 +3,24 @@
 # https://cloud.wpi.pw
 
 NAME:
+
   wpi
 
 DESCRIPTION:
+
   Manage Workflow through the command-line.
 
 SYNOPSIS:
+
   wpi <command>
 
 SUBCOMMANDS:
+
+  app: Downloads, installs, updates, and manages a WordPress installation via WPI.
   help: Gets help on WPI, or on a specific command.
   init: Install required packages like wp-cli, yq, jq.
 
 GLOBAL_PARAMETERS:
+
   - param: --local | -l
-    description: run the WPI localy from downloaded repository.
+    description: Run the WPI localy from downloaded repository.

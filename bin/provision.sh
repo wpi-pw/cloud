@@ -1,95 +1,76 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-echo "=============================="
-echo "System update and packages cleanup"
-echo "=============================="
+# WPI Cloud - init
+# by Dima Minka (https://dima.mk)
+# https://cloud.wpi.pw
+
+# Define colors
+readonly RED='\033[0;31m' # error
+readonly GRN='\033[0;32m' # success
+readonly BLU='\033[0;34m' # task
+readonly BRN='\033[0;33m' # headline
+readonly NC='\033[0m'     # no color
+
+# Start to calculate the duration of provision
+start_seconds="$(date +%s)"
+
+printf "%s${GRN}Updating:${NC} System update and packages cleanup\n"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 sudo echo grub-pc hold | sudo dpkg --set-selections
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+sudo add-apt-repository -y ppa:rmescandon/yq > /dev/null 2>&1
+sudo apt-get -y update > /dev/null 2>&1
+sudo apt-get -y upgrade > /dev/null 2>&1
 
-echo "=============================="
-echo "Install useful packages"
-echo "=============================="
-sudo apt install haveged curl git unzip zip -y
+printf "%s${GRN}Installing:${NC} Install required packages\n"
+sudo apt install unzip zip yq jq -y > /dev/null 2>&1
 
-echo "=============================="
-echo "Your username WordOps, your email is test@test.test"
-echo "=============================="
+printf "%s${GRN}Setup:${NC} Your username WPICloud, your email is wpi@wpi.pw\n"
+sudo echo -e "[user]\n\tname = WPICloud\n\temail = wpi@wpi.pw" > /home/vagrant/.gitconfig
+sudo echo -e "[user]\n\tname = WPICloud\n\temail = wpi@wpi.pw" > /root/.gitconfig
 sudo chown vagrant:vagrant /home/vagrant/.[^.]*
-sudo echo -e "[user]\n\tname = WordOps\n\temail = test@test.test" > ~/.gitconfig
 
-echo "=============================="
-echo "Install WordOps"
-echo "=============================="
+printf "%s${GRN}Installing:${NC} WordOps init\n"
 sudo wget -qO wo wops.cc
-sudo bash wo || exit 1
+sudo bash wo > /dev/null 2>&1 || exit 1
 
-echo "=============================="
-echo "Install Nginx, php7.3 and configure WO backend"
-echo "=============================="
-sudo wo stack install --mysql --php73 || exit 1
-sudo yes | sudo wo site create 0.test --php73 --mysql
-sudo echo -e "[user]\n\tname = WordOps\n\temail = test@test.test" > ~/.gitconfig
-sudo yes | sudo wo site delete 0.test
-
-echo "=============================="
-echo "Install Composer"
-echo "=============================="
-cd ~/
-curl -sS https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/bin/composer
-
-echo "=============================="
-echo "Allow shell for www-data for SFTP usage"
-echo "=============================="
-sudo usermod -s /bin/bash www-data
-
-echo "=============================="
-echo "wp cli - ianstall and add bash-completion for user www-data"
-echo "=============================="
-# automatically generate the security keys
-wp package install aaemnnosttv/wp-cli-dotenv-command --allow-root
-# download wp-cli bash_completion
-sudo wget -O /etc/bash_completion.d/wp-completion.bash https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash
-# change /var/www owner
-sudo chown www-data:www-data /var/www
-# download .profile & .bashrc for www-data
-sudo wget -O /var/www/.profile https://raw.githubusercontent.com/VirtuBox/ubuntu-nginx-web-server/master/var/www/.profile
-sudo wget -O /var/www/.bashrc https://raw.githubusercontent.com/VirtuBox/ubuntu-nginx-web-server/master/var/www/.bashrc
-
-# set owner
-sudo chown www-data:www-data /var/www/.profile
-sudo chown www-data:www-data /var/www/.bashrc
-
-# add wo for non-root users 
-echo -e "alias wo='sudo -E wo'" >> /home/vagrant/.bashrc
-echo -e "source /etc/bash_completion.d/wo_auto.rc" >> /home/vagrant/.bashrc
-# copy .profile/.bashrc to root
+printf "%s${GRN}Downloading:${NC} .profile & .bashrc\n"
+sudo wget -qO /var/www/.profile https://raw.githubusercontent.com/wpi-pw/ubuntu-nginx-web-server/master/var/www/.profile
+sudo wget -qO /var/www/.bashrc https://raw.githubusercontent.com/wpi-pw/ubuntu-nginx-web-server/master/var/www/.bashrc
 sudo cp /home/vagrant/.profile /root
 sudo cp /home/vagrant/.bashrc /root
 
-echo "=============================="
-echo "Downloading: yq is a lightweight and flexible command-line YAML processor"
-echo "=============================="
-sudo add-apt-repository ppa:rmescandon/yq
-sudo apt update
-sudo apt install yq -y
+printf "%s${GRN}Setup:${NC} Vagrant alias for WordOps\n"
+echo -e "alias wo='sudo -E wo'" >> /home/vagrant/.bashrc
+echo -e "source /etc/bash_completion.d/wo_auto.rc" >> /home/vagrant/.bashrc
 
-echo "=============================="
-echo "Downloading: search-replace-database installer - srdb.sh"
-echo "=============================="
-cd /usr/local/bin && sudo wget https://gist.githubusercontent.com/DimaMinka/24c3df57a78dd841a534666a233492a9/raw/d5ca7209164c7a22879fc7863f1bac1f0145ba84/srdb.sh
-sudo chmod +x srdb.sh
+printf "%s${GRN}Installing:${NC} NGINX, php7.3 and configure WO backend\n"
+sudo wo stack install --php73 --mysql > /dev/null 2>&1 || exit 1
+sudo yes | sudo wo site create 0.test --php73 --mysql > /dev/null 2>&1
+sudo yes | sudo wo site delete 0.test > /dev/null 2>&1
 
-echo "=============================="
-echo "Clean before package"
-echo "=============================="
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
-sudo apt-get -y autoremove && sudo apt-get clean
+printf "%s${GRN}Installing:${NC} Make WPI executable\n"
+wget -qO wpi wpi.pw/wpi
+sudo chmod +x wpi
+sudo mv wpi /usr/local/bin
+
+printf "%s${GRN}Installing:${NC} Composer and WP CLI\n"
+curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
+sudo mv composer.phar /usr/bin/composer
+curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+sudo chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+
+printf "%s${GRN}Cleaning:${NC} Autoremove, apt-get, bash history\n"
+sudo apt-get -y autoremove > /dev/null 2>&1
+sudo apt-get clean > /dev/null 2>&1
 export DEBIAN_FRONTEND=newt
-sudo dd if=/dev/zero of=/EMPTY bs=1M
-sudo rm -f /EMPTY
 sudo cat /dev/null > ~/.bash_history && history -c
+
+printf "%s${GRN}Tweaking:${NC} Prepare NGINX for local development\n"
+sudo sed -i -e "s/sendfile on/sendfile off/g" "/etc/nginx/conf.d/tweaks.conf"
+sudo sed -i -e "s/open_file_cache max=50000 inactive=60s/open_file_cache off/g" "/etc/nginx/conf.d/tweaks.conf"
+
+# End to calculate the duration of provision
+end_seconds="$(date +%s)"
+printf "%s${GRN}Provisioning completed:${NC} in "$(( end_seconds - start_seconds ))" seconds\n"

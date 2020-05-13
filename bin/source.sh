@@ -13,7 +13,7 @@ readonly NC='\033[0m'     # no color
 
 # Check for a registered commands
 case "$1" in
-  app | init | help);;
+  app | init | help | vagrant);;
   *)  printf "${RED}Warning:${NC} '%s' is not a registered wpi command. See 'wpi help'. \n" "$1" && exit 1 ;;
 esac
 

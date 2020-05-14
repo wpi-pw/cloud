@@ -15,6 +15,11 @@ Move WPI to bin directory
 ```shell script
 $ mv wpi /usr/local/bin
 ```
+---
+Run WPI Cloud vagrant init
+```shell script
+$ curl -sL wpi.pw/wpi > wpi && bash wpi vagrant
+```
 
 ## The Idea
 ![WPI Cloud MindMap](./help/wpi-idea.png)

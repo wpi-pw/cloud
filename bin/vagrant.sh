@@ -4,11 +4,12 @@
 # by Dima Minka (https://dima.mk)
 # https://cloud.wpi.pw
 
-# Load cloud source scripts
-case "${@: -1}" in
-  --local | -l) source ${PWD}/bin/source.sh;; # Load local source scripts
-  *)            source <(curl -s https://raw.githubusercontent.com/wpi-pw/cloud/master/bin/source.sh);;
-esac
+# Define colors
+readonly RED='\033[0;31m' # error
+readonly GRN='\033[0;32m' # success
+readonly BLU='\033[0;34m' # task
+readonly BRN='\033[0;33m' # headline
+readonly NC='\033[0m'     # no color
 
 if [[ -f "config.yml" ]]; then
   printf "%s${RED}Warning:${NC} Config file exist\n"

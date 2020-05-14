@@ -117,3 +117,5 @@ done
 
 printf "%s${GRN}Displaying: ${NC}Apps list:\n"
 yq r config.yml -C apps
+
+printf "%s${BRN}Completing: ${NC}Please run 'vagrant up' to complete installation\n"

@@ -11,39 +11,39 @@ readonly BLU='\033[0;34m' # task
 readonly BRN='\033[0;33m' # headline
 readonly NC='\033[0m'     # no color
 
-if [[ -f "config.yml" ]]; then
-  printf "%s${RED}Warning:${NC} Config file exist\n"
-  read -r -p "The process will remove Vagrantfile and config! [y/N] " conf_yn
-  [[ -z "$conf_yn" || "$conf_yn" =~ ^([nN][oO]|[nN])$ ]] && exit
-  # Removing existing files
-  rm Vagrantfile config.yml
-fi
+#if [[ -f "config.yml" ]]; then
+#  printf "%s${RED}Warning:${NC} Config file exist\n"
+#  read -r -p "The process will remove Vagrantfile and config! [y/N] " conf_yn
+#  [[ -z "$conf_yn" || "$conf_yn" =~ ^([nN][oO]|[nN])$ ]] && exit
+#  # Removing existing files
+#  rm Vagrantfile config.yml
+#fi
 
-printf "%s${GRN}Downloading:${NC} WPI Cloud Vagrantfile for local development\n"
-curl -sO https://raw.githubusercontent.com/wpi-pw/vagrant/master/Vagrantfile
-
-printf "%s${GRN}Configuration:${NC} Setup Vagrant machine settings\n"
-touch config.yml
-
-# Add default machine configuration
-yq w -i config.yml  'ip' 192.168.13.100
-yq w -i config.yml  'memory' 1024
-yq w -i config.yml  'cpus' 1
-yq w -i config.yml  'hostname' wpi-box
-yq w -i config.yml  'provider' parallels
-yq w -i config.yml  'wpi_email' wpi@wpi.pw
-yq w -i config.yml  'wpi_user' WPICloud
-yq w -i config.yml  'vm_box' wpi/box
-yq w -i config.yml  'id_rsa' ~/.ssh/id_rsa
-yq w -i config.yml  'id_rsa_pub' ~/.ssh/id_rsa.pub
-
-# Setup Vagrant machine configuration
-conf_args=(ip memory cpus hostname provider wpi_email wpi_user vm_box id_rsa id_rsa_pub)
-for i in "${!conf_args[@]}"; do
-  printf "%s${BLU}${conf_args[$i]}: ${BRN}$(yq r config.yml ${conf_args[$i]})${NC}\n"
-  read -r -p "Enter new value to change the ${conf_args[$i]} or ENTER to continue: `echo $'\n> '`" cur_a
-  [[ -n "$cur_a" ]] && yq w -i config.yml "${conf_args[$i]}" $cur_a
-done
+#printf "%s${GRN}Downloading:${NC} WPI Cloud Vagrantfile for local development\n"
+#curl -sO https://raw.githubusercontent.com/wpi-pw/vagrant/master/Vagrantfile
+#
+#printf "%s${GRN}Configuration:${NC} Setup Vagrant machine settings\n"
+#touch config.yml
+#
+## Add default machine configuration
+#yq w -i config.yml  'ip' 192.168.13.100
+#yq w -i config.yml  'memory' 1024
+#yq w -i config.yml  'cpus' 1
+#yq w -i config.yml  'hostname' wpi-box
+#yq w -i config.yml  'provider' parallels
+#yq w -i config.yml  'wpi_email' wpi@wpi.pw
+#yq w -i config.yml  'wpi_user' WPICloud
+#yq w -i config.yml  'vm_box' wpi/box
+#yq w -i config.yml  'id_rsa' ~/.ssh/id_rsa
+#yq w -i config.yml  'id_rsa_pub' ~/.ssh/id_rsa.pub
+#
+## Setup Vagrant machine configuration
+#conf_args=(ip memory cpus hostname provider wpi_email wpi_user vm_box id_rsa id_rsa_pub)
+#for i in "${!conf_args[@]}"; do
+#  printf "%s${BLU}${conf_args[$i]}: ${BRN}$(yq r config.yml ${conf_args[$i]})${NC}\n"
+#  read -r -p "Enter new value to change the ${conf_args[$i]} or ENTER to continue: `echo $'\n> '`" cur_a
+#  [[ -n "$cur_a" ]] && yq w -i config.yml "${conf_args[$i]}" $cur_a
+#done
 
 printf "%s${GRN}Configuration:${NC} Setup the app\n"
 
@@ -69,6 +69,14 @@ for i in "${!app_args[@]}"; do
     *);;
   esac
 
+  # Git sub key helper
+  case "${app_args[$i]}-$skip_git" in
+    scm-true) continue;;
+    repo-true) continue;;
+    branch-true) continue;;
+    *);;
+  esac
+
   if [[ -n "$override" ]]; then
     # Override default app values
     read -r -p "Enter new value to change the ${app_args[$i]} or ENTER for default: `echo $'\n> '`" cur_a
@@ -91,16 +99,17 @@ for i in "${!app_args[@]}"; do
     # Set value to current variable
     cur_a=${options[$((cur_option-1))]}
     git_disable=$cur_a
+    [[ "$git_disable" == "new" ]] && skip_git=true
   fi
 
   # Git sub key helper
-  case "${app_args[$i]}-$git_disable" in
-    scm-) sub_key="git.";;
-    repo-) sub_key="git.";;
-    branch-) sub_key="git.";;
+  case "${app_args[$i]}-$cur_a" in
     scm-new) continue;;
     repo-new) continue;;
     branch-new) continue;;
+    scm-*) sub_key="git.";;
+    repo-*) sub_key="git.";;
+    branch-*) sub_key="git.";;
     *);;
   esac
 

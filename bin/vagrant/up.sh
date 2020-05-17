@@ -12,10 +12,8 @@ readonly BRN='\033[0;33m' # headline
 readonly NC='\033[0m'     # no color
 
 # Define custom config if exist
-if [[ -f "/vagrant/config/wpi-custom.yml" ]]; then
-	wpi_conf="/vagrant/config/wpi-custom.yml"
-else
-  wpi_conf="/vagrant/config/wpi-default.yml"
+if [[ -f "/vagrant/config.yml" ]]; then
+	wpi_conf="/vagrant/config.yml"
 fi
 
 printf "%s${GRN}Staring:${NC} NGINX running after app folder sync\n"

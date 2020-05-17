@@ -5,10 +5,8 @@
 # https://cloud.wpi.pw
 
 # Define custom config if exist
-if [[ -f "/vagrant/config/wpi-custom.yml" ]]; then
-	wpi_conf="/vagrant/config/wpi-custom.yml"
-else
-  wpi_conf="/vagrant/config/wpi-default.yml"
+if [[ -f "/vagrant/config.yml" ]]; then
+	wpi_conf="/vagrant/config.yml"
 fi
 
 # Define colors

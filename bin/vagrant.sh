@@ -11,10 +11,6 @@ readonly BLU='\033[0;34m' # task
 readonly BRN='\033[0;33m' # headline
 readonly NC='\033[0m'     # no color
 
-pwd
-bash bin/vagrant/app.sh
-exit
-
 if [[ -f "config.yml" ]]; then
   printf "%s${RED}Warning:${NC} Config file exist\n"
   read -r -p "The process will remove Vagrantfile and config! [y/N] " conf_yn

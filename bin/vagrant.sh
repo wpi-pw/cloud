@@ -11,6 +11,14 @@ readonly BLU='\033[0;34m' # task
 readonly BRN='\033[0;33m' # headline
 readonly NC='\033[0m'     # no color
 
+if [[ -n "$2" ]]; then
+  # Runner WPI Cloud scripts
+  case "${@: -1}" in
+    --local | -l) bash ${PWD}/bin/$1/$2.sh "$@" && exit 1;;
+    *)            bash <(curl -sL wpi.pw/bin/$1/$2.sh) "$@" && exit 1 ;;
+  esac
+fi
+
 if [[ -f "config.yml" ]]; then
   printf "%s${RED}Warning:${NC} Config file exist\n"
   read -r -p "The process will remove Vagrantfile and config! [y/N] " conf_yn

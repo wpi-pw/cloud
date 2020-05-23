@@ -17,7 +17,7 @@ source <(curl -s https://raw.githubusercontent.com/wpi-pw/template-workflow/mast
 cur_env=$(cur_env)
 # Copy current release of theme
 if [[ "$(wpi_yq themes.parent.symlink.env)" == "$cur_env" ]]; then
-  app_dir={PWD}
+  app_dir=${PWD}
   app_content=$( wpi_yq "env.$cur_env.app_content" )
   theme_name=$(echo $( wpi_yq "themes.parent.name" ) | cut -d"/" -f2)
   theme_path="${app_dir%/}${app_content%/}/themes/$theme_name"

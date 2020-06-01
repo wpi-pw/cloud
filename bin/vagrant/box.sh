@@ -27,7 +27,7 @@ sudo apt install unzip zip yq jq -y > /dev/null 2>&1
 
 printf "%s${GRN}Setup:${NC} Your username WPICloud, your email is wpi@wpi.pw\n"
 sudo echo -e "[user]\n\tname = WPICloud\n\temail = wpi@wpi.pw" > /home/vagrant/.gitconfig
-sudo echo -e "[user]\n\tname = WPICloud\n\temail = wpi@wpi.pw" > /root/.gitconfig
+sudo cp /home/vagrant/.gitconfig /root/
 sudo chown vagrant:vagrant /home/vagrant/.[^.]*
 
 printf "%s${GRN}Installing:${NC} WordOps init\n"
@@ -44,7 +44,7 @@ printf "%s${GRN}Setup:${NC} Vagrant alias for WordOps\n"
 echo -e "alias wo='sudo -E wo'" >> /home/vagrant/.bashrc
 echo -e "source /etc/bash_completion.d/wo_auto.rc" >> /home/vagrant/.bashrc
 
-printf "%s${GRN}Installing:${NC} NGINX, php7.3 and configure WO backend\n"
+printf "%s${GRN}Installing:${NC} NGINX, php7.2-7.4 and configure WO backend\n"
 sudo wo stack install --php72 --mysql > /dev/null 2>&1 || exit 1
 sudo wo stack install --php73 --mysql > /dev/null 2>&1 || exit 1
 sudo wo stack install --php74 --mysql > /dev/null 2>&1 || exit 1

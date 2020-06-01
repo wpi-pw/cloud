@@ -45,7 +45,9 @@ echo -e "alias wo='sudo -E wo'" >> /home/vagrant/.bashrc
 echo -e "source /etc/bash_completion.d/wo_auto.rc" >> /home/vagrant/.bashrc
 
 printf "%s${GRN}Installing:${NC} NGINX, php7.3 and configure WO backend\n"
+sudo wo stack install --php72 --mysql > /dev/null 2>&1 || exit 1
 sudo wo stack install --php73 --mysql > /dev/null 2>&1 || exit 1
+sudo wo stack install --php74 --mysql > /dev/null 2>&1 || exit 1
 sudo yes | sudo wo site create 0.test --php73 --mysql > /dev/null 2>&1
 sudo yes | sudo wo site delete 0.test > /dev/null 2>&1
 

@@ -20,8 +20,8 @@ if [ "$(yq r $wpi_conf vm_box)" == "wpi/box" ]; then
   printf "%s${GRN}Configuring:${NC} email: $(yq r $wpi_conf wpi_email), user:$(yq r $wpi_conf wpi_user)\n"
   sudo echo -e "source ~/.bashrc\n" >> /home/vagrant/.bash_profile 2>/dev/null
   sudo chown vagrant:vagrant /home/vagrant/.[^.]*
-  sudo echo -e "[user]\n\tname = $conf_wpi_user\n\temail = $(yq r $wpi_conf wpi_email)" > /home/vagrant/.gitconfig
-  sudo echo -e "[user]\n\tname = $conf_wpi_user\n\temail = $(yq r $wpi_conf wpi_user)" > /root/.gitconfig
+  sudo echo -e "[user]\n\tname = $(yq r $wpi_conf wpi_user)\n\temail = $(yq r $wpi_conf wpi_email)" > /home/vagrant/.gitconfig
+  sudo echo -e "[user]\n\tname = $(yq r $wpi_conf wpi_user)\n\temail = $(yq r $wpi_conf wpi_user)" > /root/.gitconfig
 
   printf "%s${GRN}Configuring:${NC} ssh-keyscan for GitHub and BitBucket\n"
   sudo ssh-keyscan -H bitbucket.org >> /home/vagrant/.ssh/known_hosts 2>/dev/null

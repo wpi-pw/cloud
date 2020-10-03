@@ -1,0 +1,35 @@
+# WPI Cloud - tools help
+# by Dima Minka (https://dima.mk)
+# https://cloud.wpi.pw
+
+NAME:
+
+  wpi tools
+
+DESCRIPTION:
+
+  Download tools like: Adminer, Rocket Nginx, SRDB etc.
+
+SYNOPSIS:
+
+  wpi tools <command>
+
+SUBCOMMANDS:
+
+  adminer: Download the last version of Adminer from github to current directory.
+  srdb: Download the last version of Search and Replace tool from github to current directory.
+  rocket-nginx: Download the last version of Rocket Nginx package from github to /etc/nginx-rc.
+
+EXAMPLES:
+
+  - wpi app adminer
+  - wpi app srdb
+  - wpi app rocket-nginx
+
+
+GLOBAL_PARAMETERS:
+
+  - param: --help | -h
+    description: Gets help on WPI, or on a specific command.
+  - param: --local | -l
+    description: Run the WPI localy from downloaded repository.

@@ -2,7 +2,7 @@
 ---
 WPI install
 ```shell script
-$ wget -qO wpi wpi.pw/wpi && bash wpi init
+$ wget -qO wpi wpi.pw/wpi.sh && bash wpi init
 ```
 
 ## Manualy installation for Vagrant/MacOS

@@ -20,9 +20,7 @@ curl -s -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.
 chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
-printf "%s${GRN}Installing:${NC} yq/jq is a lightweight and flexible command-line YAML/JSON processor\n"
-sudo echo grub-pc hold | sudo dpkg --set-selections
-sudo add-apt-repository -y ppa:rmescandon/yq > /dev/null 2>&1
-sudo apt-get -y update > /dev/null 2>&1
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade > /dev/null 2>&1
-sudo apt install yq jq -y > /dev/null 2>&1
+printf "%s${GRN}Installing:${NC} yq is a lightweight and flexible command-line YAML processor\n"
+curl -s -L -O https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 > yq
+chmod +x yq
+sudo mv yq /usr/local/bin

@@ -21,6 +21,6 @@ chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 
 printf "%s${GRN}Installing:${NC} yq is a lightweight and flexible command-line YAML processor\n"
-curl -s -L -O https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 > yq
+curl -s -L https://github.com/mikefarah/yq/releases/download/3.4.1/yq_linux_amd64 > yq
 chmod +x yq
 sudo mv yq /usr/local/bin

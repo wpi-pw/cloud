@@ -19,12 +19,14 @@ SUBCOMMANDS:
   adminer: Download the last version of Adminer from adminer.org to current directory with timer for auto deletion.
   rocket-nginx: Download the last version of Rocket Nginx package from github to /etc/nginx-rc.
   srdb: Download the last version of Search and Replace tool from github to current directory.
+  wpi-reset: Remove all installed and created dir/files of wpi-app.
 
 EXAMPLES:
 
-  - wpi app adminer
-  - wpi app rocket-nginx
-  - wpi app srdb
+  - wpi tools adminer
+  - wpi tools rocket-nginx
+  - wpi tools srdb
+  - wpi tools wpi-reset
 
 
 GLOBAL_PARAMETERS:

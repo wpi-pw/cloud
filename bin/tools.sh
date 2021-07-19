@@ -6,7 +6,7 @@
 
 # Check for a registered commands
 case "$2" in
-  adminer | rocket-nginx | srdb);;
+  adminer | rocket-nginx | srdb | wpi-reset);;
   *)  printf "${RED}Warning:${NC} '%s' is not a registered wpi command. See 'wpi tools --help'. \n" "$1 $2" && exit 1 ;;
 esac
 

@@ -19,6 +19,7 @@ SUBCOMMANDS:
   app: Downloads, installs, updates, and manages a WordPress installation via WPI.
   help: Gets help on WPI, or on a specific command.
   init: Install required packages like wp-cli, yq, jq.
+  tools: Download or run special scripts, like adminer, srdb or WPI reset feature.
 
 GLOBAL_PARAMETERS:
 
